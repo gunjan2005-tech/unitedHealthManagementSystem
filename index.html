@@ -1,16 +1,187 @@
+
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>United Health Management System</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-
 <body>
-  Hello world
-  <script src="script.js"></script>
-</body>
+    <header class="header">
+        <div class="container">
+            <h1><i class="fas fa-hospital"></i> United Health Management System</h1>
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+                <button class="tab-btn" data-tab="beds">Bed Management</button>
+                <button class="tab-btn" data-tab="appointments">Appointments</button>
+                <button class="tab-btn" data-tab="patients">Patients</button>
+            </nav>
+        </div>
+    </header>
 
+    <main class="main-content">
+        <!-- Dashboard Tab -->
+        <div class="tab-content active" id="dashboard">
+            <div class="container">
+                <h2>Hospital Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-bed"></i>
+                        <h3>Total Beds</h3>
+                        <span class="stat-number" id="totalBeds">150</span>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Available Beds</h3>
+                        <span class="stat-number available" id="availableBeds">45</span>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-user-injured"></i>
+                        <h3>Occupied Beds</h3>
+                        <span class="stat-number occupied" id="occupiedBeds">105</span>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-calendar-check"></i>
+                        <h3>Today's Appointments</h3>
+                        <span class="stat-number" id="todayAppointments">28</span>
+                    </div>
+                </div>
+                
+                <div class="chart-section">
+                    <h3>Bed Occupancy by Department</h3>
+                    <div class="department-chart">
+                        <div class="dept-bar">
+                            <span class="dept-name">Emergency</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 85%"></div>
+                                <span class="bar-text">17/20</span>
+                            </div>
+                        </div>
+                        <div class="dept-bar">
+                            <span class="dept-name">ICU</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 90%"></div>
+                                <span class="bar-text">18/20</span>
+                            </div>
+                        </div>
+                        <div class="dept-bar">
+                            <span class="dept-name">General Ward</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 70%"></div>
+                                <span class="bar-text">35/50</span>
+                            </div>
+                        </div>
+                        <div class="dept-bar">
+                            <span class="dept-name">Pediatrics</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 60%"></div>
+                                <span class="bar-text">18/30</span>
+                            </div>
+                        </div>
+                        <div class="dept-bar">
+                            <span class="dept-name">Maternity</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 55%"></div>
+                                <span class="bar-text">17/30</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bed Management Tab -->
+        <div class="tab-content" id="beds">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Bed Management</h2>
+                    <button class="btn btn-primary" onclick="showAddBedForm()">
+                        <i class="fas fa-plus"></i> Add New Bed
+                    </button>
+                </div>
+
+                <div class="filters">
+                    <select id="departmentFilter" onchange="filterBeds()">
+                        <option value="">All Departments</option>
+                        <option value="Emergency">Emergency</option>
+                        <option value="ICU">ICU</option>
+                        <option value="General Ward">General Ward</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="Maternity">Maternity</option>
+                    </select>
+                    <select id="statusFilter" onchange="filterBeds()">
+                        <option value="">All Status</option>
+                        <option value="Available">Available</option>
+                        <option value="Occupied">Occupied</option>
+                        <option value="Maintenance">Maintenance</option>
+                    </select>
+                </div>
+
+                <div class="bed-grid" id="bedGrid">
+                    <!-- Beds will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments Tab -->
+        <div class="tab-content" id="appointments">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Appointment Management</h2>
+                    <button class="btn btn-primary" onclick="showAddAppointmentForm()">
+                        <i class="fas fa-plus"></i> Schedule Appointment
+                    </button>
+                </div>
+
+                <div class="appointment-queue">
+                    <h3>Today's Appointment Queue</h3>
+                    <div class="queue-list" id="appointmentQueue">
+                        <!-- Appointments will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="appointment-calendar">
+                    <h3>Upcoming Appointments</h3>
+                    <div class="calendar-grid" id="appointmentCalendar">
+                        <!-- Calendar will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patients Tab -->
+        <div class="tab-content" id="patients">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Patient Management</h2>
+                    <button class="btn btn-primary" onclick="showAddPatientForm()">
+                        <i class="fas fa-plus"></i> Add Patient
+                    </button>
+                </div>
+
+                <div class="search-section">
+                    <input type="text" placeholder="Search patients..." id="patientSearch" onkeyup="searchPatients()">
+                </div>
+
+                <div class="patient-list" id="patientList">
+                    <!-- Patients will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for forms -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalBody">
+                <!-- Dynamic form content -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
